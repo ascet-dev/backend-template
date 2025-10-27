@@ -1,0 +1,163 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff
+instance/
+.webassets-cache
+
+# Scrapy stuff
+.scrapy/
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# IPython
+profile_default/
+ipython_config.py
+
+# SageMath
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.uv/
+
+# Lint/mypy/typing tools
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+cython_debug/
+.flakeheaven_cache
+.ruff_cache/
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.code-workspace
+*.iml
+*.ipr
+*.iws
+*.swp
+*.swo
+
+# Optional: keep shared VS Code config
+# Uncomment if you want to keep shared project configs
+# !.vscode/extensions.json
+# !.vscode/settings.example.json
+
+# OS generated files
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+Ehthumbs.db
+Thumbs.db
+Desktop.ini
+.directory
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+
+# Logs
+*.log
+logs/
+
+# Local development
+.env.local
+
+# Data & database files
+*.db
+*.sqlite3
+/data.sql
+
+# Alembic (migration versions)
+alembic/versions/*.py
+!alembic/versions/__init__.py
+
+# Secrets handling
+!*.env.example
+!*.env.sample
+
+# CI/CD systems
+.github/
+.gitlab/
+.circleci/
+
+# Temporary files
+/tmp

@@ -1,0 +1,95 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: fitness
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+  postgres_migrations:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: backend:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PG__CONNECTION__DSN: postgresql://postgres:postgres@postgres:5432/fitness
+    command: alembic upgrade head
+
+  data_migrations:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: backend:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+      postgres_migrations:
+        condition: service_completed_successfully
+    environment:
+      PG__CONNECTION__DSN: postgresql://postgres:postgres@postgres:5432/fitness
+    command: python manage.py apply-sql data.sql
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: backend:latest
+    restart: on-failure
+    depends_on:
+      postgres:
+        condition: service_healthy
+      postgres_migrations:
+        condition: service_completed_successfully
+      data_migrations:
+        condition: service_completed_successfully
+    ports:
+      - "8003:8001"
+    environment:
+      PYTHONUNBUFFERED: 1
+      ENV: COMPOSE
+      HOST: 0.0.0.0
+      PORT: 8001
+      PG__CONNECTION__DSN: postgresql://postgres:postgres@postgres:5432/fitness
+      S3__CONNECTION__URL: "http://minio:9000"
+    command: python manage.py start-web
+
+  minio:
+    image: minio/minio:RELEASE.2020-11-13T20-10-18Z
+    ports:
+      - "9000:9000"
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    command: minio server /data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  minio_init:
+    image: minio/mc:RELEASE.2021-03-10T05-59-20Z
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      sleep 5;
+      mc alias set local http://minio:9000 minioadmin minioadmin &&
+      mc mb local/bucket || true
+      "
+
+volumes:
+  postgres_data:
