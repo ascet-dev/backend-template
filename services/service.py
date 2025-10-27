@@ -5,11 +5,13 @@ from services.repositories import DAO
 
 
 class App(BaseApp):
-    pg = component(PG, config_key='pg')
+    pg = component(PG, config_key="pg")
 
     @property
     def dao(self) -> DAO:
-        if hasattr(self, '_dao'):
+        if not hasattr(self, "_dao"):
+            if not self.pg.is_alive():
+                raise RuntimeError("PG is not alive")
             self._dao = DAO(self.pg)
         return self._dao
 
