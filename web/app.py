@@ -3,11 +3,14 @@ from adc_webkit.web.web import Route
 
 from services import App
 from settings import cfg
-from web.endpoints import Liveness, Readiness
+from web.endpoints import Do, Liveness, Readiness
 
-app = App(components_config={
-    'pg': cfg.pg.connection.model_dump(),
-})
+app = App(
+    components_config={
+        "pg": cfg.pg.connection.model_dump(),
+        "dao": {},
+    },
+)
 
 
 class WebApp(Web):
@@ -15,7 +18,8 @@ class WebApp(Web):
     routes = [
         Route("GET", "/readiness", Readiness),
         Route("GET", "/liveness", Liveness),
+        Route("GET", "/do", Do),
     ]
 
 
-web = WebApp.create(bindings={'app': app})
+web = WebApp.create(bindings={"app": app})
