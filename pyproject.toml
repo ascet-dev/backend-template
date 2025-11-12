@@ -14,19 +14,24 @@ requires-python = ">=3.11"
 
 dependencies = [
     # Core framework
-    "adc-webkit@ git+https://github.com/ascet-dev/adc-webkit.git@main",
-    "adc-appkit@ git+https://github.com/ascet-dev/adc-appkit.git@main",
-    "adc-logger@ git+https://github.com/ascet-dev/adc-logger.git@main",
-    "adc-aiopg@ git+https://github.com/ascet-dev/adc-aiopg.git@main",
-    "adc-aios3@ git+https://github.com/ascet-dev/adc-aios3.git@main",
+    "adc-webkit",
+    "adc-appkit",
+    "adc-logger",
+    "adc-aiopg",
+    "adc-aios3",
+
     # Settings and validation
     "pydantic-settings>=2.2.0",
+
     # Utilities
     "click>=8.1.7",
+
     # HTTP client
     "aiohttp>=3.9.0",
+
     # Monitoring
     "sentry-sdk>=2.26.1",
+    
     # CLI
     "uvloop>=0.19.0",
 ]
