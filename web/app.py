@@ -3,7 +3,7 @@ from adc_webkit.web.web import Route
 
 from services import App
 from settings import cfg
-from web.endpoints import Do, Liveness, Readiness
+from web import endpoints as e
 
 app = App(
     components_config={
@@ -16,9 +16,11 @@ app = App(
 class WebApp(Web):
     cors = cfg.app.cors.model_dump()
     routes = [
-        Route("GET", "/readiness", Readiness),
-        Route("GET", "/liveness", Liveness),
-        Route("GET", "/do", Do),
+        # health
+        Route("GET", "/readiness", e.Readiness),
+        Route("GET", "/liveness", e.Liveness),
+        # example
+        Route("GET", "/do", e.Do),
     ]
 
 

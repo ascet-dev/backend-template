@@ -6,7 +6,7 @@ from sqlalchemy import UUID as SA_UUID
 from sqlalchemy import MetaData, text
 from sqlmodel import Field
 
-meta = MetaData(schema="fitness")
+meta = MetaData(schema="app")
 NOW = text("(now() at time zone 'utc')")
 UUID4 = text("uuid_generate_v4()")
 

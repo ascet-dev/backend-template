@@ -1,9 +1,12 @@
-from adc_appkit import BaseApp, component, ComponentStrategy
+from logging import getLogger
+
+from adc_appkit import BaseApp, ComponentStrategy, component
 from adc_appkit.components.component import create_component
 from adc_appkit.components.pg import PG
 
 from services.repositories import DAO
-import sqlalchemy as sa
+
+logger = getLogger(__name__)
 
 
 class App(BaseApp):
@@ -21,7 +24,7 @@ class App(BaseApp):
     async def do(self):
         async with self.request_scope({}):
             res = await self.pg.obj.fetchval("SELECT 1")
-            print(res)
+            logger.info(res)
 
     async def _stop(self):
         pass
